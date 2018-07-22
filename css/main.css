@@ -1,7 +1,6 @@
 @import url("pygment_highlights.css");
 
 /* --- General --- */
-
 .centraltext {
   text-align: center;
 }
@@ -238,10 +237,10 @@ img {
 /* --- Footer --- */
 
 footer {
-  padding: 2px 0;
+  padding: 10px 0;
   background: #F5F5F5;
   border-top: 1px #EAEAEA solid;
-  margin-top: 160px;
+  margin-top: 220px;
   font-size: 14px;
 }
 
