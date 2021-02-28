@@ -1,0 +1,14 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    color: red;
+}
+
+.toggle_menu {
+    margin-left: 200px;
+    border-right: 0.5px solid white;
+    height: 100vh;
+    margin-right: 71.2%;
+}
