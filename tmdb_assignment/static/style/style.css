@@ -1,5 +1,6 @@
 body {
     background-color: black;
+    height: 100%;
 }
 
 h1 {
@@ -7,8 +8,18 @@ h1 {
 }
 
 .toggle_menu {
-    margin-left: 200px;
+    float: left;
+    margin-left: 8%;
     border-right: 0.5px solid white;
-    height: 100vh;
-    margin-right: 71.2%;
+    height: 130vh;
+}
+
+.current {
+    color: white;
+    font-size: 24px;
+}
+
+.next {
+    color: white;
+    font-size: 24px;
 }

@@ -9,24 +9,96 @@
     <title>The Movie DB</title>
 
     <script>
-        function toggle_content(id) {
+        var currentMovieImage = 0;
+        var currentTVImage = 0;
+        const movie_images = [];
+        const tv_images = [];
 
+        function initMovieSlideshow() {
+            setMovieImage(0);
+            setInterval(function() {
+                nextMovieImage();
+            }, 1500);
+        }
+
+        function initTVSlideshow() {
+            setTVImage(0);
+            setInterval(function() {
+                nextTVImage();
+            }, 1200);
+        }
+
+        function nextMovieImage() {
+            if (movie_images.length === currentMovieImage + 1) {
+                currentMovieImage = 0;
+            } else {
+                currentMovieImage++;
+            }
+            setMovieImage(currentMovieImage);
+        }
+
+        function nextTVImage() {
+            if (tv_images.length === currentTVImage + 1) {
+                currentTVImage = 0;
+            } else {
+                currentTVImage++;
+            }
+            setTVImage(currentTVImage);
+        }
+
+        function setMovieImage(loc) {
+            document.querySelectorAll('.movieslide')[0].src = movie_images[loc];
+        }
+
+        function setTVImage(loc) {
+            document.querySelectorAll('.tvshowslide')[0].src = tv_images[loc];
+        }
+
+
+        window.onload = function get_trending() {
+            fetch('http://localhost:5002/gettrending')
+                .then(response => response.json())
+                .then(data => {
+                    const pathtoimage = []
+                    var i = 0
+                    const myPath = "https://image.tmdb.org/t/p/w780/";
+                    for (const [key, value] of Object.entries(data[0])) {
+                        movie_images.push(myPath + value[0])
+                    }
+                    for (const [key, value] of Object.entries(data[1])) {
+                        tv_images.push(myPath + value[0])
+                    }
+
+                });
+            initMovieSlideshow();
+            initTVSlideshow();
         }
     </script>
 </head>
 
 <body>
     <h1>THE MOVIE DB</h1>
-    <div class="toggle_menu">
-        <div>
-            <a class="current" id="homepage" onclick="toggle_content(this.id);" style="color: white; font-size: 24px;">Home</a>
+    <div style="text-align: center;">
+        <div class="toggle_menu">
+            <div>
+                <a class="current" id="homepage" onclick="toggle_content(this.id);">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2192;</a>
+            </div>
+            <hr style="width: 98%; text-align: left; margin-left: 0%;">
+            <div>
+                <a class="next" id="searchpage" onclick="toggle_content(this.id);">Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2192;</a>
+            </div>
         </div>
-        <hr style="width: 99%; text-align: left; margin-left: 0%;">
-        <div>
-            <a class="next" id="searchpage" onclick="toggle_content(this.id);" style="color: white; font-size: 24px;">Search</a>
+        <div class="content-menu">
+            <h2 style="color:white;">Trending Movies</h2>
+            <div>
+                <img class="movieslide">
+            </div>
+            <h2 style="color:white">TV Shows On-Air Today</h2>
+            <div>
+                <img class="tvshowslide">
+            </div>
         </div>
     </div>
-
 </body>
 
 </html>
