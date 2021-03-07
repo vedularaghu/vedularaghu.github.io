@@ -7,97 +7,181 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/style/style.css">
     <title>The Movie DB</title>
+    <script src="../static/style/code.js"></script>
 
-    <script>
-        var currentMovieImage = 0;
-        var currentTVImage = 0;
-        const movie_images = [];
-        const tv_images = [];
-
-        function initMovieSlideshow() {
-            setMovieImage(0);
-            setInterval(function() {
-                nextMovieImage();
-            }, 1500);
-        }
-
-        function initTVSlideshow() {
-            setTVImage(0);
-            setInterval(function() {
-                nextTVImage();
-            }, 1200);
-        }
-
-        function nextMovieImage() {
-            if (movie_images.length === currentMovieImage + 1) {
-                currentMovieImage = 0;
-            } else {
-                currentMovieImage++;
-            }
-            setMovieImage(currentMovieImage);
-        }
-
-        function nextTVImage() {
-            if (tv_images.length === currentTVImage + 1) {
-                currentTVImage = 0;
-            } else {
-                currentTVImage++;
-            }
-            setTVImage(currentTVImage);
-        }
-
-        function setMovieImage(loc) {
-            document.querySelectorAll('.movieslide')[0].src = movie_images[loc];
-        }
-
-        function setTVImage(loc) {
-            document.querySelectorAll('.tvshowslide')[0].src = tv_images[loc];
-        }
-
-
-        window.onload = function get_trending() {
-            fetch('http://localhost:5002/gettrending')
-                .then(response => response.json())
-                .then(data => {
-                    const pathtoimage = []
-                    var i = 0
-                    const myPath = "https://image.tmdb.org/t/p/w780/";
-                    for (const [key, value] of Object.entries(data[0])) {
-                        movie_images.push(myPath + value[0])
-                    }
-                    for (const [key, value] of Object.entries(data[1])) {
-                        tv_images.push(myPath + value[0])
-                    }
-
-                });
-            initMovieSlideshow();
-            initTVSlideshow();
-        }
-    </script>
 </head>
 
 <body>
-    <h1>THE MOVIE DB</h1>
+    <h1 style="background-image: linear-gradient(to right, black, black, black, black, red);">THE MOVIE DB</h1>
     <div style="text-align: center;">
         <div class="toggle_menu">
             <div>
-                <a class="current" id="homepage" onclick="toggle_content(this.id);">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2192;</a>
+                <p class="active"><a class="tablinks" id="homepage" onclick="toggle_content(event, 'content-menu');">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2192;</a></p>
             </div>
-            <hr style="width: 98%; text-align: left; margin-left: 0%;">
+            <div id="homeunderline">
+                <hr style="width: 118%; text-align: left; margin-left: -20%;">
+            </div>
             <div>
-                <a class="next" id="searchpage" onclick="toggle_content(this.id);">Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2192;</a>
+                <p><a class="tablinks" id="searchpage" onclick="toggle_content(event, 'search-menu');">Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2192;</a></p>
+            </div>
+            <div id="searchunderline">
+                <hr style="width: 118%; text-align: left; margin-left: -20%;">
             </div>
         </div>
-        <div class="content-menu">
-            <h2 style="color:white;">Trending Movies</h2>
+        <div id="content-menu" class="tabcontent">
             <div>
-                <img class="movieslide">
+                <h2 style="color:white;">Trending Movies</h2>
+                <div class="container">
+                    <img class="movieslide" alt="Fetching the trending movies!">
+                    <div class="content">
+                        <p id="moviedetails"></p>
+                    </div>
+                </div>
             </div>
-            <h2 style="color:white">TV Shows On-Air Today</h2>
-            <div>
-                <img class="tvshowslide">
+            <div style="margin-top: 35%;">
+                <h2 style="color:white">TV Shows On-Air Today</h2>
+                <div class="container">
+                    <img class="tvshowslide" alt="Fetching the trending Tv Shows!">
+                    <div class="content">
+                        <p id="tvdetails"></p>
+                    </div>
+                </div>
             </div>
         </div>
+        <div id="search-menu" class="tabcontent">
+            <div class="searchbox">
+                <h2 style="color:white">Search</h2>
+                <div style="text-align: left; margin-left: 30%;">
+                    <label class="required" style="color: white;">Keyword</label> &nbsp;&nbsp;
+                    <input type="text" id="searchquery" size="50" style="border-radius: 5px;">
+                    <br><br>
+                    <label class="required" style="color: white;">Category</label> &nbsp;&nbsp;
+                    <select name="type" id="category" style="border-radius: 5px;">
+                        <option value=""></option>
+                        <option value="movies">Movies</option>
+                        <option value="tvshow">TV Shows</option>
+                        <option value="bothmt">Movies and TV Shows</option>
+                    </select>
+                    <br><br>
+                    <div class="submitsearch" style="margin-left: 20%;">
+                        <button type="submit" style="background-color: black; color:white;" value="Submit" onclick="clearprev(); fetchData()">Submit</button>
+                        <button type="clear" style="background-color: black; color:white; margin-left: 5%;" onclick="cleardivs()">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class="displayresults">
+                <!-- <p class="resultshead">Showing results...</p>
+                <div class="showcontent" style="margin-top: 2%;">
+                    <div class="poster">
+                        <img src="../static/images/dummyposter.jpg " height="100%">
+                    </div>
+                    <div class="displaycontent">
+                        <p class="contentheader"><b>Birds of America</</p>
+                        <p class="contenttype">2011 | Sci-Fi & Fantasy,Drama,Action</p>
+                        <p class="ratings"><span class="ratingnumber">★ 4.5/5 &nbsp;&nbsp;</span><span class="votecount">450 votes</span>
+                        </p>
+                        <p class="contentdesc">"A regular guy struggles with a repressive home and professional life, as well as making amends for the trouble his free-spirited brother and sister cause about town."</p>
+                        <button class="showmore" onclick="showDetails()">Show More</button>
+                    </div>                    
+                </div> -->
+                <!-- <div id="myModal" class="modal"> -->
+
+                <!-- Modal content -->
+                <!-- <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <img class="ModalImage" src="../static/images/test_image.jpg" alt="">
+                        <div class = "modaldetails" style="text-align: left; margin-left: 3.5%; width: 92%; margin-bottom: 10%;">
+                            <p class = "modalcontentname" style=" font-size: 24px;">Doctor Strange <a class = "modali" style="font-size: 16px; color: rgb(201, 5, 5);" href=""><b> &#9432;</b></a>
+                            </p>
+                            <p >2011 | Sci-Fi & Fantasy, Drama, Action</p>
+                            <p class="ratings"><span class="ratingnumber">★ 4.5/5 &nbsp;&nbsp;</span><span style="color: black;">450 votes</span>
+                            </p>
+                            <br>
+                            <p style="margin-top: 1%;">"A regular guy struggles with a repressive home and professional life, as well as making amends for the trouble his free-spirited brother and sister cause about town."</p>
+                            <p style="font-style: italic; color: rgb(3, 3, 3); font-weight: bolder;">Spoken languages: English</p><br>
+                            <h3>Cast</h3>
+                            <div>
+                                <div style="float: left; width: 23%;">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                                <div style="float: left; width: 23%; margin-left: 2%;">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                                <div style="float: left;  width: 23%; margin-left: 2%">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                                <div style="float: left;  width: 23%; margin-left: 2%">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 5%;">
+                                <div style="float: left; width: 23%;">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                                <div style="float: left; width: 23%; margin-left: 2%;">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                                <div style="float: left;  width: 23%; margin-left: 2%">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                                <div style="float: left;  width: 23%; margin-left: 2%">
+                                    <img src="../static/images/movie_placeholder.png" alt="">
+                                    <div style="text-align: center; margin-top: 5%; font-size: 14px;">
+                                        <p style="margin: 0;"><b>Benedict Cumberbatch</b></p>
+                                        <p style="margin: 0;">AS</p>
+                                        <p style="margin: 0;">Stephen Strange / Doctor Stra...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div>
+                                <h3>Reviews</h3>
+                                <p><b>review name</b> on review_date</p>
+                                <p>review content</p>
+                                <p class="ratings"><span class="ratingnumber">★ 4.5/5 &nbsp;&nbsp;</span></p>
+                                <hr style="height:2px;border-width:0;color:rgba(150, 149, 149, 0.87);background-color:rgba(150, 149, 149, 0.87); width: 70%;">
+                            </div>
+                        </div>
+                    </div> -->
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
     </div>
 </body>
 
