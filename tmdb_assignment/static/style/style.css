@@ -155,8 +155,15 @@ div {
 }
 
 .contentdesc {
-    font-size: 12px;
-    text-align: justify;
+    font-size: 16px;
+    /* text-align: justify; */
+    line-height: 1.2em;
+    max-height: 3.6em;
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
 }
 
 .modalcontentdesc {

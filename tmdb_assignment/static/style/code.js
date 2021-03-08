@@ -59,7 +59,6 @@ window.onload = function get_trending() {
     fetch('http://localhost:5002/gettrending')
         .then(response => response.json())
         .then(data => {
-            const pathtoimage = []
             var i = 0
             const myPath = "https://image.tmdb.org/t/p/w780/";
             for (const [key, value] of Object.entries(data[0])) {
@@ -75,6 +74,7 @@ window.onload = function get_trending() {
         });
     initMovieSlideshow();
     initTVSlideshow();
+    getGenre();
 }
 
 function toggle_content(evt, tabName) {
@@ -410,8 +410,6 @@ function fetchData() {
         url.searchParams.append('query', query)
     }
 
-    getGenre();
-
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -452,6 +450,7 @@ function fetchData() {
                 var p2 = document.createElement("p")
                 p2.classList.add("contenttype")
                 p2.innerHTML = value["release_date"].substring(0, 4) + " | ";
+
 
                 for (var i = 0; i < value["genre_ids"].length; i++) {
                     if (i < value["genre_ids"].length - 1) {

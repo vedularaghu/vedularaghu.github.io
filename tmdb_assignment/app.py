@@ -142,7 +142,12 @@ def get_movie_details():
     movie_details_result['overview'] = movie_details_obj['overview']
     movie_details_result['release_date'] = movie_details_obj['release_date']
     movie_details_result['spoken_languages'] = movie_details_obj['spoken_languages']
-    movie_details_result['vote_average'] = movie_details_obj['vote_average']  
+    print(movie_details_obj['vote_average'] / 2)
+    if movie_details_obj['vote_average']:
+        if movie_details_obj['vote_average'] > 5.0 :
+            movie_details_result['vote_average'] = movie_details_obj['vote_average'] / 2
+        else:
+            movie_details_result['vote_average'] = movie_details_obj['vote_average']  
     movie_details_result['vote_count'] = movie_details_obj['vote_count']
     movie_details_result['poster_path'] = movie_details_obj['poster_path']    
     movie_details_result['backdrop_path'] = movie_details_obj['backdrop_path']
