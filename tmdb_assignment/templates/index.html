@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/style/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
     <title>The Movie DB</title>
     <script src="../static/style/code.js"></script>
 
@@ -13,7 +15,7 @@
 
 <body>
     <h1 style="background-image: linear-gradient(to right, black, black, black, black, red);">THE MOVIE DB</h1>
-    <div style="text-align: center;">
+    <div style="text-align: center; position: relative;">
         <div class="toggle_menu">
             <div>
                 <p class="active"><a class="tablinks" id="homepage" onclick="toggle_content(event, 'content-menu');">Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2192;</a></p>
@@ -38,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div style="margin-top: 35%;">
+            <div style="margin-top: 5%;">
                 <h2 style="color:white">TV Shows On-Air Today</h2>
                 <div class="container">
                     <img class="tvshowslide" alt="Fetching the trending Tv Shows!">
@@ -47,25 +49,29 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="footer1">
+                <p>Designed and developed by Raghavendra Vedula</p>
+                <p>Powered by TMDB</p>
+            </div> -->
         </div>
         <div id="search-menu" class="tabcontent">
             <div class="searchbox">
                 <h2 style="color:white">Search</h2>
                 <div style="text-align: left; margin-left: 30%;">
                     <label class="required" style="color: white;">Keyword</label> &nbsp;&nbsp;
-                    <input type="text" id="searchquery" size="50" style="border-radius: 5px;">
+                    <input type="text" id="searchquery" size="50" style="border-radius: 3px; border: none; height: 20px;">
                     <br><br>
                     <label class="required" style="color: white;">Category</label> &nbsp;&nbsp;
-                    <select name="type" id="category" style="border-radius: 5px;">
+                    <select name="type" id="category" style="border-radius: 3px; border: none; height: 20px;">
                         <option value=""></option>
                         <option value="movies">Movies</option>
                         <option value="tvshow">TV Shows</option>
                         <option value="bothmt">Movies and TV Shows</option>
                     </select>
                     <br><br>
-                    <div class="submitsearch" style="margin-left: 20%;">
-                        <button type="submit" style="background-color: black; color:white;" value="Submit" onclick="clearprev(); fetchData()">Submit</button>
-                        <button type="clear" style="background-color: black; color:white; margin-left: 5%;" onclick="cleardivs()">Clear</button>
+                    <div class="submitsearch" style="margin-left: 15%; margin-top: 0.5%;">
+                        <button class="button" onclick="clearprev(); ">Search</button>
+                        <button class="button" style=" margin-left: 7%;" onclick="cleardivs()">Clear</button>
                     </div>
                 </div>
             </div>
@@ -179,9 +185,13 @@
                         </div>
                     </div> -->
                 <!-- </div> -->
+
             </div>
         </div>
     </div>
+    <div class="footer1">
+        <p>Designed and developed by Raghavendra Vedula</p>
+        <p>Powered by TMDB</p>
     </div>
 </body>
 

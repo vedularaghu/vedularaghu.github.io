@@ -1,6 +1,45 @@
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+.button {
+    padding: 1%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    border: none;
+    border-radius: 5px;
+    width: 15%;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
+
+.button:hover {
+    background-color: red;
+}
+
+.button:focus {
+    outline: 0;
+}
+
+.button1 {
+    padding: 1%;
+    padding-top: 1.2%;
+    padding-bottom: 1.2%;
+    border: none;
+    border-radius: 5px;
+    width: 13%;
+    cursor: pointer;
+    color: white;
+    margin-top: 1%;
+    background-color: rgb(172, 6, 6);
+}
+
 body {
     background-color: black;
     height: 100%;
+    /* font-family: 'Raleway'; */
 }
 
 h1 {
@@ -34,6 +73,7 @@ a {
     position: relative;
     width: 82%;
     float: left;
+    margin-left: 8%;
 }
 
 .container img {
@@ -48,7 +88,7 @@ a {
     color: #f1f1f1;
     width: 80%;
     padding: 20px;
-    margin-left: 10%;
+    margin-left: 9%;
     font-size: 18px;
     text-align: center;
 }
@@ -65,10 +105,10 @@ a {
 .searchbox {
     float: left;
     width: 80%;
-    height: 100%;
     margin-left: 1%;
-    background-color: #272822;
-    background-image: linear-gradient(red, red, red, rgb(94, 20, 20), rgb(94, 20, 20), rgb(94, 20, 20));
+    background-color: #be0c0c;
+    background-image: linear-gradient(rgb(160, 19, 19), rgb(160, 19, 19), rgb(100, 10, 10), rgb(65, 9, 9), rgb(26, 2, 2));
+    padding-bottom: 4%;
 }
 
 p {
@@ -109,6 +149,7 @@ div {
 
 .contenttype {
     margin: 0%;
+    font-family: sans-serif;
 }
 
 .ratings {
@@ -117,20 +158,13 @@ div {
 }
 
 .ratingnumber {
-    color: red;
+    color: rgb(165, 7, 7);
     font-style: italic;
 }
 
 .votecount {
     color: white;
     vertical-align: -10%;
-}
-
-.showmore {
-    padding: 5px;
-    border-radius: 2px;
-    background-color: red;
-    color: white;
 }
 
 .resultshead {
@@ -147,23 +181,22 @@ div {
     float: left;
     margin-left: 1%;
     width: 80%;
+    height: 100%;
+    padding-bottom: 5%;
 }
 
 #content-menu,
 #search-menu {
-    border-left: 0.5px solid white;
+    border-left: 1px solid white;
+    position: relative;
+    padding-bottom: 5%;
+    min-height: 80vh;
 }
 
 .contentdesc {
     font-size: 16px;
-    /* text-align: justify; */
-    line-height: 1.2em;
-    max-height: 3.6em;
+    text-align: justify;
     display: block;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    text-overflow: ellipsis;
-    overflow: hidden !important;
 }
 
 .modalcontentdesc {
@@ -224,6 +257,7 @@ div {
 
 .modalcontentname {
     font-size: 24px;
+    font-family: 'Raleway';
 }
 
 .modali {
@@ -231,15 +265,31 @@ div {
     color: rgb(201, 5, 5);
 }
 
+.ellipse {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+    margin: 0;
+}
+
 .firstclass {
     float: left;
     width: 23%;
+    display: block;
 }
 
 .restclass {
     float: left;
     width: 23%;
     margin-left: 2%;
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
 }
 
 .textdiv {
@@ -257,5 +307,29 @@ div {
     border-width: 0;
     color: rgba(150, 149, 149, 0.87);
     background-color: rgba(150, 149, 149, 0.87);
-    width: 70%;
+    width: 80%;
+}
+
+.reviewtex {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+}
+
+.footer1 {
+    position: absolute;
+    bottom: 0;
+    float: right;
+    width: 80%;
+    margin-left: 18%;
+    line-height: 3%;
+    background-color: rgb(88, 6, 6);
+    color: rgba(255, 255, 255, 0.493);
+    text-align: right;
+    font-family: 'sans-serif';
+    padding-right: 0.5%;
+    margin-top: 50%;
 }

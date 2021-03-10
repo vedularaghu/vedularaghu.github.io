@@ -1,7 +1,12 @@
 import requests
+from flask_cors import CORS, cross_origin
 from collections import defaultdict 
 from flask import Flask, request, render_template
 app = Flask(__name__)
+
+CORS(app)
+
+
 
 @app.route("/")
 def main():
@@ -61,7 +66,7 @@ def get_movie():
     movie_response_obj = movie_response.json()  
     for i in range(len(movie_response_obj['results'])):
         movie_result[movie_response_obj['results'][i]['id']] = {'title': movie_response_obj['results'][i]['title'], 'overview': movie_response_obj['results'][i]['overview'], 'poster_path': movie_response_obj['results'][i]['poster_path'],
-                            'release_date': movie_response_obj['results'][i]['release_date'], 'vote_average': movie_response_obj['results'][i]['vote_average'], 'vote_count': movie_response_obj['results'][i]['vote_count'], 'genre_ids': movie_response_obj['results'][i]['genre_ids']}
+                            'release_date': movie_response_obj['results'][i].setdefault('release_date', None), 'vote_average': movie_response_obj['results'][i]['vote_average'], 'vote_count': movie_response_obj['results'][i]['vote_count'], 'genre_ids': movie_response_obj['results'][i]['genre_ids']}
         if movie_result[movie_response_obj['results'][i]['id']]["vote_average"] > 5.0:
                 movie_result[movie_response_obj['results'][i]['id']]["vote_average"] /= 2
     return movie_result
@@ -84,10 +89,10 @@ def get_tv():
                                 )
     tv_response_obj = tv_response.json()  
     for i in range(len(tv_response_obj['results'])):
-        tv_result[tv_response_obj['results'][i]['id']] = {'title': tv_response_obj['results'][i]['name'], 'overview': tv_response_obj['results'][i]['overview'], 'poster_path': tv_response_obj['results'][i]['poster_path'],
-                            'release_date': tv_response_obj['results'][i]['first_air_date'], 'vote_average': tv_response_obj['results'][i]['vote_average'], 'vote_count': tv_response_obj['results'][i]['vote_count'], 'genre_ids': tv_response_obj['results'][i]['genre_ids']} 
-        if tv_result[tv_response_obj['results'][i]['id']]["vote_average"] > 5.0:
-                tv_result[tv_response_obj['results'][i]['id']]["vote_average"] /= 2
+            tv_result[tv_response_obj['results'][i]['id']] = {'title': tv_response_obj['results'][i]['name'], 'overview': tv_response_obj['results'][i]['overview'], 'poster_path': tv_response_obj['results'][i]['poster_path'],
+                                'release_date': tv_response_obj['results'][i].setdefault('first_air_date', "null"), 'vote_average': tv_response_obj['results'][i]['vote_average'], 'vote_count': tv_response_obj['results'][i]['vote_count'], 'genre_ids': tv_response_obj['results'][i]['genre_ids']} 
+            if tv_result[tv_response_obj['results'][i]['id']]["vote_average"] > 5.0:
+                    tv_result[tv_response_obj['results'][i]['id']]["vote_average"] /= 2
     return tv_result
 
 @app.route("/multisearch")
@@ -272,8 +277,9 @@ def get_tv_review():
     for i in range(min(5, len(tv_reviews_obj['results']))):
         tv_review[i] = {"username": tv_reviews_obj['results'][i]['author_details']['username'], "content": tv_reviews_obj['results'][i]['content'], 
                             "rating": tv_reviews_obj['results'][i]['author_details']['rating'], "created_at": tv_reviews_obj['results'][i]['created_at']}
-        if tv_review[i]["rating"] > 5.0:
-            tv_review[i]["rating"] /= 2
+        if tv_review[i]["rating"]:
+            if tv_review[i]["rating"] > 5.0:
+                tv_review[i]["rating"] /= 2
 
     return tv_review
 

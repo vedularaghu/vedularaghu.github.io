@@ -56,21 +56,26 @@ function setTVImage(loc) {
 
 window.onload = function get_trending() {
     document.getElementById("homepage").click();
-    fetch('http://localhost:5002/gettrending')
+    fetch('https://searchmovieworld1.azurewebsites.net//gettrending')
         .then(response => response.json())
         .then(data => {
             var i = 0
             const myPath = "https://image.tmdb.org/t/p/w780/";
             for (const [key, value] of Object.entries(data[0])) {
+
                 movie_images.push(myPath + value[0])
                 movie_text.push(key + " " + "(" + value[1].substring(0, 4) + ")")
 
             }
             for (const [key, value] of Object.entries(data[1])) {
+
                 tv_images.push(myPath + value[0])
                 tv_text.push(key + " " + "(" + value[1].substring(0, 4) + ")")
             }
-
+            document.querySelectorAll('.movieslide')[0].src = movie_images[0];
+            document.getElementById("moviedetails").innerHTML = movie_text[0];
+            document.querySelectorAll('.tvshowslide')[0].src = tv_images[0];
+            document.getElementById("tvdetails").innerHTML = tv_text[0];
         });
     initMovieSlideshow();
     initTVSlideshow();
@@ -108,14 +113,14 @@ function popup() {
 }
 
 function getGenre() {
-    fetch('http://localhost:5002/moviegenre')
+    fetch('https://searchmovieworld1.azurewebsites.net//moviegenre')
         .then(response => response.json())
         .then(data => {
             for (const [key, value] of Object.entries(data)) {
                 movie_genre[key] = value
             }
         })
-    fetch('http://localhost:5002/tvgenre')
+    fetch('https://searchmovieworld1.azurewebsites.net//tvgenre')
         .then(response => response.json())
         .then(data => {
             for (const [key, value] of Object.entries(data)) {
@@ -130,19 +135,19 @@ function getBackendData(param) {
     console.log(param, cat, id);
 
     if (cat == "movies") {
-        var urlDetails = new URL('http://localhost:5002/moviedetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//moviedetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('http://localhost:5002/moviecredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//moviecredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('http://localhost:5002/moviereview')
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//moviereview')
         urlReview.searchParams.append('id', id);
 
     } else {
-        var urlDetails = new URL('http://localhost:5002/tvshowdetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//tvshowdetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('http://localhost:5002/tvcredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//tvcredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('http://localhost:5002/tvreview');
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//tvreview');
         urlReview.searchParams.append('id', id);
     }
 
@@ -197,19 +202,19 @@ function showDetails(param) {
 
 
     if (cat == "movies") {
-        var urlDetails = new URL('http://localhost:5002/moviedetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//moviedetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('http://localhost:5002/moviecredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//moviecredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('http://localhost:5002/moviereview')
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//moviereview')
         urlReview.searchParams.append('id', id);
 
     } else {
-        var urlDetails = new URL('http://localhost:5002/tvshowdetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//tvshowdetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('http://localhost:5002/tvcredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//tvcredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('http://localhost:5002/tvreview');
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//tvreview');
         urlReview.searchParams.append('id', id);
     }
 
@@ -229,7 +234,7 @@ function showDetails(param) {
     else
         a1.href = "https://www.themoviedb.org/tv" + "/" + id
     var bold = document.createElement("b")
-    bold.innerHTML = "   &#9432;"
+    bold.innerHTML = "&nbsp;" + "&nbsp;" + "&#9432;"
     a1.appendChild(bold)
 
     var p2 = document.createElement("p")
@@ -244,6 +249,7 @@ function showDetails(param) {
 
     var p4 = document.createElement("p")
     p4.classList.add("modalcontentdesc")
+    p4.classList.add("ellipse")
 
     var p5 = document.createElement("p")
     p5.classList.add("spoken")
@@ -253,10 +259,7 @@ function showDetails(param) {
     var castdiv2 = document.createElement("div")
     castdiv2.classList.add("cast2div")
 
-    var h1 = document.createElement("h3")
-    h1.innerHTML = "Reviews"
     var reviewDiv = document.createElement("div")
-    reviewDiv.appendChild(h1)
 
     fetch(urlDetails)
         .then(response => response.json())
@@ -270,7 +273,8 @@ function showDetails(param) {
             p1.appendChild(ptext)
             p1.appendChild(a1)
 
-            p2.innerHTML = data["release_date"].substring(0, 4) + " | ";
+            if (data["release_date"])
+                p2.innerHTML = data["release_date"].substring(0, 4) + " | ";
 
             for (var i = 0; i < data["genres"].length; i++) {
                 if (i < data["genres"].length - 1)
@@ -278,12 +282,14 @@ function showDetails(param) {
                 else
                     p2.innerHTML += data["genres"][i]["name"];
             }
-            sp1.innerHTML = "★" + "&nbsp;" + "&nbsp;" + data["vote_average"] + "&nbsp;" + "&nbsp;";
-            p3.appendChild(sp1)
-            var sp2 = document.createElement("span")
-            sp2.classList.add("vote_average")
-            sp2.innerHTML = (String(data["vote_count"]) + " votes").sup()
-            p3.appendChild(sp2)
+            if (data["vote_average"]) {
+                sp1.innerHTML = "★" + "&nbsp;" + "&nbsp;" + data["vote_average"] + "&nbsp;" + "&nbsp;";
+                p3.appendChild(sp1)
+                var sp2 = document.createElement("span")
+                sp2.classList.add("vote_average")
+                sp2.innerHTML = (String(data["vote_count"]) + " votes").sup()
+                p3.appendChild(sp2)
+            }
 
             p4.innerHTML = data["overview"]
 
@@ -303,15 +309,16 @@ function showDetails(param) {
             for (var x in data) {
                 console.log(x, data[x]);
                 var imgdiv = document.createElement("div")
-                if (x == 0 || x == 4)
+                if (x == 0 || x == 4) {
                     imgdiv.classList.add("firstclass")
-                else
+                    imgdiv.classList.add("ellipse")
+                } else
                     imgdiv.classList.add("restclass")
                 var img = document.createElement("img")
                 if (data[x]["profile_path"] != null)
                     img.src = "https://image.tmdb.org/t/p/w185" + data[x]["profile_path"]
                 else
-                    img.src = "../static/images/movie_placeholder.png"
+                    img.src = "../static/images/person-placeholder.png"
                 var textdiv = document.createElement("div")
                 textdiv.classList.add("textdiv")
                 var p6 = document.createElement("p")
@@ -320,8 +327,10 @@ function showDetails(param) {
                 p6.style.margin = "0"
                 p6.style.fontWeight = "bold"
                 p6.innerHTML = data[x]["name"]
-                p7.stylemargin = 0
-                p7.innerHTML = "AS"
+                if (data[x]["character"]) {
+                    p7.style.margin = "0"
+                    p7.innerHTML = "AS"
+                }
                 p8.style.margin = 0
                 p8.innerHTML = data[x]["character"]
                 textdiv.appendChild(p6)
@@ -339,6 +348,14 @@ function showDetails(param) {
     fetch(urlReview)
         .then(response => response.json())
         .then(data => {
+            var h1 = document.createElement("h2")
+            h1.innerHTML = "Reviews"
+            if (data[0])
+                reviewDiv.appendChild(h1)
+            else {
+                h1.innerHTML = "Reviews: N/A"
+                reviewDiv.appendChild(h1)
+            }
             for (var x in data) {
                 var rd = document.createElement("div")
                 var p1 = document.createElement("p")
@@ -349,13 +366,15 @@ function showDetails(param) {
                 sp2.classList.add("ratingnumber")
                 b1.innerHTML = data[x]["username"]
                     // console.log(Date(data[x]["created_at"]));
-                var txt = document.createTextNode(" on " + data[x]["created_at"].substring(5, 7) + "/" + data[x]["created_at"].substring(7, 9) + "/" + data[x]["created_at"].substring(0, 5));
+                var txt = document.createTextNode(" on " + data[x]["created_at"].substring(5, 7) + "/" + data[x]["created_at"].substring(8, 10) + "/" + data[x]["created_at"].substring(0, 4));
                 p1.appendChild(b1)
                 p1.appendChild(txt)
-                sp2.innerHTML = "★" + "&nbsp;" + "&nbsp;" + data[x]["rating"]
+                if (data[x]["rating"])
+                    sp2.innerHTML = "&#9733;  " + data[x]["rating"] + "/5"
                 p_r.appendChild(sp2)
                 var p_c = document.createElement("p")
                 p_c.innerHTML = data[x]["content"]
+                p_c.classList.add("reviewtex")
                 var hr1 = document.createElement("hr")
                 hr1.classList.add("review_hr")
                 rd.appendChild(p1)
@@ -400,121 +419,147 @@ function fetchData() {
     var query = document.getElementById("searchquery").value
     var category = document.getElementById("category").value
     if (category == "movies") {
-        var url = new URL('http://localhost:5002/movie')
+        var url = new URL('https://searchmovieworld1.azurewebsites.net//movie')
         url.searchParams.append('query', query)
     } else if (category == "tvshow") {
-        var url = new URL('http://localhost:5002/tvshow')
+        var url = new URL('https://searchmovieworld1.azurewebsites.net//tvshow')
         url.searchParams.append('query', query)
-    } else {
-        var url = new URL('http://localhost:5002/multisearch')
+    } else if (category == "bothmt") {
+        var url = new URL('https://searchmovieworld1.azurewebsites.net//multisearch')
         url.searchParams.append('query', query)
     }
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            var disp = document.getElementsByClassName("displayresults")[0]
+            if (JSON.stringify(data) == '{}') {
+                var disp = document.getElementsByClassName("displayresults")[0]
+                var d = document.createElement("div")
+                d.classList.add("noresclass")
+                var p = document.createElement("p")
+                p.innerHTML = "No results."
+                p.style.color = "white"
+                d.appendChild(p)
+                disp.appendChild(d)
 
-            if (p_there == false) {
-                var h = document.createElement("p")
-                h.innerHTML = "Showing results..."
-                h.classList.add("resultshead")
-                disp.appendChild(h)
-            }
-
-            for (const [key, value] of Object.entries(data)) {
+            } else {
+                console.log(data);
                 var disp = document.getElementsByClassName("displayresults")[0]
 
-                var head = document.createElement("div")
-                head.classList.add("showcontent")
-
-                var imgdiv = document.createElement("div")
-                var img = document.createElement("img")
-                if (value["poster_path"] != null) {
-                    img.src = "https://image.tmdb.org/t/p/w185" + value["poster_path"]
-                } else {
-                    img.src = "../static/images/movie_placeholder.png"
+                if (p_there == false) {
+                    var h = document.createElement("p")
+                    h.innerHTML = "Showing results..."
+                    h.classList.add("resultshead")
+                    disp.appendChild(h)
                 }
-                imgdiv.classList.add("poster")
-                imgdiv.appendChild(img)
-                head.appendChild(imgdiv)
 
-                var content = document.createElement("div")
-                content.classList.add("displaycontent")
+                for (const [key, value] of Object.entries(data)) {
+                    var disp = document.getElementsByClassName("displayresults")[0]
 
-                var p1 = document.createElement("p")
-                p1.classList.add("contentheader")
-                p1.innerHTML = value["title"]
+                    var head = document.createElement("div")
+                    head.classList.add("showcontent")
 
-                var p2 = document.createElement("p")
-                p2.classList.add("contenttype")
-                p2.innerHTML = value["release_date"].substring(0, 4) + " | ";
+                    var imgdiv = document.createElement("div")
+                    var img = document.createElement("img")
+                    if (value["poster_path"] != null) {
+                        img.src = "https://image.tmdb.org/t/p/w185" + value["poster_path"]
+                    } else {
+                        img.src = "../static/images/movie_placeholder.png"
+                    }
+                    imgdiv.classList.add("poster")
+                    imgdiv.appendChild(img)
+                    head.appendChild(imgdiv)
+
+                    var content = document.createElement("div")
+                    content.classList.add("displaycontent")
+
+                    var p1 = document.createElement("p")
+                    p1.classList.add("contentheader")
+                    p1.innerHTML = value["title"]
+
+                    var p2 = document.createElement("p")
+                    p2.classList.add("contenttype")
+                    if (value["release_date"])
+                        p2.innerHTML = value["release_date"].substring(0, 4) + " | ";
 
 
-                for (var i = 0; i < value["genre_ids"].length; i++) {
-                    if (i < value["genre_ids"].length - 1) {
-                        if (category == "movies")
-                            p2.innerHTML += movie_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                        else if (category == "tvshow")
-                            p2.innerHTML += tv_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                        else {
-                            if (value["media_type"] == "movies")
+                    for (var i = 0; i < value["genre_ids"].length; i++) {
+                        if (i < value["genre_ids"].length - 1) {
+                            if (category == "movies")
                                 p2.innerHTML += movie_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                            else
+                            else if (category == "tvshow")
                                 p2.innerHTML += tv_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                        }
-                    } else {
-                        if (category == "movies")
-                            p2.innerHTML += movie_genre[value["genre_ids"][i]];
-                        else if (category == "tvshow")
-                            p2.innerHTML += tv_genre[value["genre_ids"][i]];
-                        else {
-                            if (value["media_type"] == "movies")
+                            else {
+                                if (value["media_type"] == "movies")
+                                    p2.innerHTML += movie_genre[value["genre_ids"][i]] + "," + "&nbsp;"
+                                else
+                                    p2.innerHTML += tv_genre[value["genre_ids"][i]] + "," + "&nbsp;"
+                            }
+                        } else {
+                            if (category == "movies")
                                 p2.innerHTML += movie_genre[value["genre_ids"][i]];
-                            else
+                            else if (category == "tvshow")
                                 p2.innerHTML += tv_genre[value["genre_ids"][i]];
+                            else {
+                                if (value["media_type"] == "movies")
+                                    p2.innerHTML += movie_genre[value["genre_ids"][i]];
+                                else
+                                    p2.innerHTML += tv_genre[value["genre_ids"][i]];
+                            }
                         }
+
                     }
 
-                }
-
-                var p3 = document.createElement("p")
-                p3.classList.add("ratings")
-                var sp1 = document.createElement("span")
-                sp1.classList.add("ratingnumber")
-                sp1.innerHTML = "★" + "&nbsp;" + "&nbsp;" + value["vote_average"] + "&nbsp;" + "&nbsp;";
-                p3.appendChild(sp1)
-                var sp2 = document.createElement("span")
-                sp2.classList.add("votecount")
-                sp2.innerHTML = (String(value["vote_count"]) + " votes").sup()
-                p3.appendChild(sp2)
-
-                var p4 = document.createElement("p")
-                p4.classList.add("contentdesc")
-                p4.innerHTML = value["overview"]
-
-                var b = document.createElement("button")
-                b.classList.add("showmore")
-                b.onclick = () => {
-                    if (category == "movies" || category == "tvshow") {
-                        showDetails(category + key);
-                        // showDetails();
+                    var p3 = document.createElement("p")
+                    p3.classList.add("ratings")
+                    var sp1 = document.createElement("span")
+                    sp1.classList.add("ratingnumber")
+                    if (value["vote_average"]) {
+                        sp1.innerHTML = "&#9733;" + "&nbsp;" + "&nbsp;" + value["vote_average"] + "&nbsp;" + "&nbsp;";
+                        p3.appendChild(sp1)
+                        var sp2 = document.createElement("span")
+                        sp2.classList.add("votecount")
+                        sp2.innerHTML = (String(value["vote_count"]) + " votes").sup()
+                        p3.appendChild(sp2)
                     } else {
-                        showDetails(value["media_type"] + key);
-                        // showDetails();
+                        sp1.innerHTML = "&#9733;" + "   N/A  ";
+                        p3.appendChild(sp1)
+                        var sp2 = document.createElement("span")
+                        sp2.classList.add("votecount")
+                        sp2.innerHTML = ("N/A" + " votes").sup()
+                        p3.appendChild(sp2)
                     }
-                };
-                b.innerHTML = "Show More"
 
-                content.appendChild(p1)
-                content.appendChild(p2)
-                content.appendChild(p3)
-                content.appendChild(p4)
-                content.appendChild(b)
-                head.appendChild(content)
-                disp.appendChild(head)
+                    var p4 = document.createElement("p")
+                    p4.classList.add("contentdesc")
+                    p4.classList.add("ellipse")
+                    p4.innerHTML = value["overview"]
+
+                    var b = document.createElement("button")
+                        // b.classList.add("showmore")
+                    b.onclick = () => {
+                        if (category == "movies" || category == "tvshow") {
+                            showDetails(category + key);
+                            // showDetails();
+                        } else {
+                            showDetails(value["media_type"] + key);
+                            // showDetails();
+                        }
+                    };
+                    b.classList.add("button1")
+                    b.innerHTML = "Show More"
+
+                    content.appendChild(p1)
+                    content.appendChild(p2)
+                    content.appendChild(p3)
+                    content.appendChild(p4)
+                    content.appendChild(b)
+                    head.appendChild(content)
+                    disp.appendChild(head)
+                }
             }
+        }).catch(reason => {
+            console.log(reason);
         })
 }
 
@@ -525,6 +570,13 @@ function clearprev() {
         while (d[0]) {
             d[0].parentNode.removeChild(d[0])
         }
+    }
+    var searchval = document.getElementById("searchquery").value
+    var typeval = document.getElementById("category").value
+    if (searchval == "" || typeval == "") {
+        alert("Please enter valid values.")
+    } else {
+        fetchData();
     }
 }
 
@@ -538,6 +590,16 @@ function cleardivs() {
     }
 
     var d = document.getElementsByClassName("showcontent")
+    while (d[0]) {
+        d[0].parentNode.removeChild(d[0])
+    }
+
+    var d = document.getElementsByClassName("showcontent")
+    while (d[0]) {
+        d[0].parentNode.removeChild(d[0])
+    }
+
+    var d = document.getElementsByClassName("noresclass")
     while (d[0]) {
         d[0].parentNode.removeChild(d[0])
     }
