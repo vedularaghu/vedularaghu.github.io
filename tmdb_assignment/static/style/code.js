@@ -427,7 +427,7 @@ function fetchData() {
     var query = document.getElementById("searchquery").value
     var category = document.getElementById("category").value
     if (category == "movies") {
-        var url = new URL('https://searchmovieworld1.azurewebsites.net/movie')
+        var url = new URL('http://localhost:5002/movie')
         url.searchParams.append('query', query)
     } else if (category == "tvshow") {
         var url = new URL('https://searchmovieworld1.azurewebsites.net/tvshow')

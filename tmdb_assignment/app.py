@@ -89,7 +89,7 @@ def get_tv():
                                 )
     tv_response_obj = tv_response.json()  
     for i in range(min(10, len(tv_response_obj['results']))):
-            tv_result[tv_response_obj['results'][i]['id']] = {'title': tv_response_obj['results'][i]['name'], 'overview': tv_response_obj['results'][i]('overview', "N/A"), 'poster_path': tv_response_obj['results'][i]['poster_path'],
+            tv_result[tv_response_obj['results'][i]['id']] = {'title': tv_response_obj['results'][i]['name'], 'overview': tv_response_obj['results'][i].setdefault('overview', "N/A"), 'poster_path': tv_response_obj['results'][i]['poster_path'],
                                 'release_date': tv_response_obj['results'][i].setdefault('first_air_date', None), 'vote_average': tv_response_obj['results'][i]['vote_average'], 'vote_count': tv_response_obj['results'][i]['vote_count'], 'genre_ids': tv_response_obj['results'][i]['genre_ids']} 
             if tv_result[tv_response_obj['results'][i]['id']]["vote_average"] > 5.0:
                     tv_result[tv_response_obj['results'][i]['id']]["vote_average"] /= 2
@@ -116,7 +116,7 @@ def get_multi_search():
 
     for i in range(len(multi_response_obj['results'])):
         if multi_response_obj['results'][i]["media_type"] == "tv":
-            multi_search[multi_response_obj['results'][i]['id']] = {'media_type': "tvshow", 'title': multi_response_obj['results'][i]['name'], 'overview': multi_response_obj['results'][i]('overview', "N/A"), 'poster_path': multi_response_obj['results'][i]['poster_path'],
+            multi_search[multi_response_obj['results'][i]['id']] = {'media_type': "tvshow", 'title': multi_response_obj['results'][i]['name'], 'overview': multi_response_obj['results'][i].setdefault('overview', "N/A"), 'poster_path': multi_response_obj['results'][i]['poster_path'],
                                 'release_date': multi_response_obj['results'][i]['first_air_date'], 'vote_average': multi_response_obj['results'][i]['vote_average'], 'vote_count': multi_response_obj['results'][i]['vote_count'], 'genre_ids': multi_response_obj['results'][i]['genre_ids']} 
             if multi_search[multi_response_obj['results'][i]['id']]["vote_average"] > 5.0:
                 multi_search[multi_response_obj['results'][i]['id']]["vote_average"] /= 2
