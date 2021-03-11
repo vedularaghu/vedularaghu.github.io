@@ -1,335 +1,354 @@
-html {
-    min-height: 100%;
-    position: relative;
-}
-
-.button {
-    padding: 1%;
-    padding-top: 1.5%;
-    padding-bottom: 1.5%;
-    border: none;
-    border-radius: 5px;
-    width: 15%;
-    cursor: pointer;
-    color: white;
-    background-color: black;
-}
-
-.button:hover {
-    background-color: red;
-}
-
-.button:focus {
-    outline: 0;
-}
-
-.button1 {
-    padding: 1%;
-    padding-top: 1.2%;
-    padding-bottom: 1.2%;
-    border: none;
-    border-radius: 5px;
-    width: 13%;
-    cursor: pointer;
-    color: white;
-    margin-top: 1%;
-    background-color: rgb(172, 6, 6);
-}
-
-body {
-    background-color: black;
-    height: 100%;
-    /* font-family: 'Raleway'; */
-}
-
-h1 {
-    color: red;
-}
-
-.toggle_menu {
-    float: left;
-    margin-left: 8%;
-}
-
-.tablinks {
-    color: white;
-    font-size: 24px;
-}
-
-.active {
-    color: red;
-}
-
-a {
-    text-decoration: none;
-}
-
-.next {
-    color: white;
-    font-size: 24px;
-}
-
-.container {
-    position: relative;
-    width: 82%;
-    float: left;
-    margin-left: 8%;
-}
-
-.container img {
-    vertical-align: middle;
-}
-
-.container .content {
-    position: absolute;
-    bottom: 0;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.7);
-    color: #f1f1f1;
-    width: 80%;
-    padding: 20px;
-    margin-left: 9%;
-    font-size: 18px;
-    text-align: center;
-}
-
-.tabcontent {
-    display: none;
-}
-
-.required::after {
-    content: "*";
-    color: red;
-}
-
-.searchbox {
-    float: left;
-    width: 80%;
-    margin-left: 1%;
-    background-color: #be0c0c;
-    background-image: linear-gradient(rgb(160, 19, 19), rgb(160, 19, 19), rgb(100, 10, 10), rgb(65, 9, 9), rgb(26, 2, 2));
-    padding-bottom: 4%;
-}
-
-p {
-    font-weight: normal;
-}
-
-div {
-    overflow: hidden;
-}
-
-.poster {
-    border-left: solid;
-    border-width: 7px;
-    border-color: rgb(177, 37, 37);
-    height: 100%;
-    float: left;
-}
-
-.poster img {
-    margin-left: 5%;
-    margin-top: 5%;
-    margin-bottom: 2%;
-    text-align: center;
-}
-
-.displaycontent {
-    float: right;
-    color: white;
-    text-align: left;
-    width: 75%;
-}
-
-.contentheader {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'Arial';
-}
-
-.contenttype {
-    margin: 0%;
-    font-family: sans-serif;
-}
-
-.ratings {
-    margin-top: 0%;
-    font-size: 12px;
-}
-
-.ratingnumber {
-    color: rgb(165, 7, 7);
-    font-style: italic;
-}
-
-.votecount {
-    color: white;
-    vertical-align: -10%;
-}
-
-.resultshead {
-    color: white;
-    text-align: left;
-    font-size: 18px;
-}
-
-.showcontent {
-    margin-top: 2%;
-}
-
-.displayresults {
-    float: left;
-    margin-left: 1%;
-    width: 80%;
-    height: 100%;
-    padding-bottom: 5%;
-}
-
-#content-menu,
-#search-menu {
-    border-left: 1px solid white;
-    position: relative;
-    padding-bottom: 5%;
-    min-height: 80vh;
-}
-
-.contentdesc {
-    font-size: 16px;
-    text-align: justify;
-    display: block;
-}
-
-.modalcontentdesc {
-    margin-top: 1%;
-    font-size: 16px;
-    text-align: justify;
-}
-
-.spoken {
-    font-style: italic;
-    color: rgb(3, 3, 3);
-    font-weight: bolder;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2;
-    padding-top: 5%;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow-y: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.modal-content {
-    background-color: rgba(190, 190, 190, 0.95);
-    margin: auto;
-    padding: 0.5%;
-    border: 1px solid #888;
-    width: 60%;
-}
-
-.close {
-    color: #c4c1c1;
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modaldetails {
-    text-align: left;
-    margin-left: 3.5%;
-    width: 92%;
-    margin-bottom: 10%;
-}
-
-.modalcontentname {
-    font-size: 24px;
-    font-family: 'Raleway';
-}
-
-.modali {
-    font-size: 16px;
-    color: rgb(201, 5, 5);
-}
-
-.ellipse {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden !important;
-    margin: 0;
-}
-
-.firstclass {
-    float: left;
-    width: 23%;
-    display: block;
-}
-
-.restclass {
-    float: left;
-    width: 23%;
-    margin-left: 2%;
-    display: block;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden !important;
-}
-
-.textdiv {
-    text-align: center;
-    margin-top: 5%;
-    font-size: 14px;
-}
-
-.cast2div {
-    margin-top: 5%;
-}
-
-.review_hr {
-    height: 2px;
-    border-width: 0;
-    color: rgba(150, 149, 149, 0.87);
-    background-color: rgba(150, 149, 149, 0.87);
-    width: 80%;
-}
-
-.reviewtex {
-    display: block;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden !important;
-}
-
-.footer1 {
-    position: absolute;
-    bottom: 0;
-    float: right;
-    width: 80%;
-    margin-left: 18%;
-    line-height: 3%;
-    background-color: rgb(88, 6, 6);
-    color: rgba(255, 255, 255, 0.493);
-    text-align: right;
-    font-family: 'sans-serif';
-    padding-right: 0.5%;
-    margin-top: 50%;
-}
+    html {
+        min-height: 100%;
+        position: relative;
+    }
+    
+    .button {
+        padding: 1%;
+        padding-top: 1.5%;
+        padding-bottom: 1.5%;
+        border: none;
+        border-radius: 5px;
+        width: 15%;
+        cursor: pointer;
+        color: white;
+        background-color: black;
+    }
+    
+    .button:hover {
+        background-color: red;
+    }
+    
+    .button:focus {
+        outline: 0;
+    }
+    
+    .button1 {
+        padding: 1%;
+        padding-top: 1.2%;
+        padding-bottom: 1.2%;
+        border: none;
+        border-radius: 5px;
+        width: 13%;
+        cursor: pointer;
+        color: white;
+        margin-top: 1%;
+        background-color: rgb(172, 6, 6);
+    }
+    
+    body {
+        background-color: black;
+        height: 100%;
+        font-family: 'Raleway';
+    }
+    
+    h1 {
+        color: red;
+        font-weight: bold;
+        font-family: 'Open Sans', 'sans-serif';
+    }
+    
+    .toggle_menu {
+        float: left;
+        margin-left: 10%;
+    }
+    
+    .tablinks {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .active {
+        color: red;
+    }
+    
+    a {
+        text-decoration: none;
+    }
+    
+    .next {
+        color: white;
+        font-size: 24px;
+    }
+    
+    .container {
+        position: relative;
+        width: 82%;
+        float: left;
+        margin-left: 8%;
+    }
+    
+    .container img {
+        vertical-align: middle;
+    }
+    
+    .container .content {
+        position: absolute;
+        bottom: 0;
+        background: rgb(0, 0, 0);
+        background: rgba(0, 0, 0, 0.7);
+        color: #f1f1f1;
+        width: 80%;
+        padding: 20px;
+        margin-left: 9%;
+        font-size: 18px;
+        text-align: center;
+    }
+    
+    .tabcontent {
+        display: none;
+    }
+    
+    .required::after {
+        content: "*";
+        color: red;
+    }
+    
+    .searchbox {
+        float: left;
+        width: 80%;
+        margin-left: 1%;
+        background-color: #be0c0c;
+        background-image: linear-gradient(rgb(160, 19, 19), rgb(160, 19, 19), rgb(100, 10, 10), rgb(65, 9, 9), rgb(26, 2, 2));
+        padding-bottom: 4%;
+    }
+    
+    p {
+        font-weight: normal;
+    }
+    
+    div {
+        overflow: hidden;
+    }
+    
+    .poster {
+        border-left: solid;
+        border-width: 7px;
+        border-color: rgb(177, 37, 37);
+        height: 100%;
+        float: left;
+    }
+    
+    .poster img {
+        margin-left: 5%;
+        margin-top: 5%;
+        margin-bottom: 2%;
+        text-align: center;
+    }
+    
+    .displaycontent {
+        float: right;
+        color: white;
+        text-align: left;
+        width: 75%;
+    }
+    
+    .contentheader {
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Arial';
+    }
+    
+    .contenttype {
+        margin: 0%;
+        font-family: 'Raleway';
+        font-weight: lighter;
+    }
+    
+    .ratings {
+        margin-top: 0%;
+        font-size: 12px;
+        font-weight: normal;
+    }
+    
+    .ratingnumber {
+        color: rgb(165, 7, 7);
+        font-style: italic;
+    }
+    
+    .votecount {
+        color: white;
+        vertical-align: -10%;
+    }
+    
+    .resultshead {
+        color: white;
+        text-align: left;
+        font-size: 18px;
+    }
+    
+    .showcontent {
+        margin-top: 2%;
+    }
+    
+    .displayresults {
+        font-family: 'Raleway';
+        float: left;
+        margin-left: 1%;
+        width: 80%;
+        height: 100%;
+        padding-bottom: 5%;
+    }
+    
+    #content-menu,
+    #search-menu {
+        border-left: 1px solid rgba(255, 255, 255, 0.801);
+        position: relative;
+        padding-bottom: 5%;
+        min-height: 80vh;
+        font-family: 'Raleway';
+    }
+    
+    .contentdesc {
+        font-size: 16px;
+        text-align: justify;
+        display: block;
+        font-weight: lighter;
+    }
+    
+    .modalcontentdesc {
+        margin-top: 1%;
+        font-size: 16px;
+        text-align: justify;
+    }
+    
+    .spoken {
+        font-style: italic;
+        color: rgb(3, 3, 3);
+        font-weight: bolder;
+    }
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2;
+        padding-top: 5%;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow-y: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .modal-content {
+        background-color: rgba(190, 190, 190, 0.95);
+        margin: auto;
+        padding: 0.5%;
+        border: 1px solid #888;
+        width: 60%;
+    }
+    
+    .close {
+        color: #c4c1c1;
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    .modaldetails {
+        text-align: left;
+        margin-left: 3.5%;
+        width: 92%;
+        margin-bottom: 10%;
+    }
+    
+    .modalcontentname {
+        font-size: 24px;
+        font-family: 'Raleway';
+    }
+    
+    .modali {
+        font-size: 16px;
+        color: rgb(201, 5, 5);
+    }
+    
+    .ellipse1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden !important;
+        margin: 0;
+        font-weight: lighter;
+    }
+    
+    .ellipse {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden !important;
+        margin: 0;
+        font-weight: lighter;
+    }
+    
+    .firstclass {
+        float: left;
+        width: 23%;
+        display: block;
+    }
+    
+    .restclass {
+        float: left;
+        width: 23%;
+        margin-left: 2%;
+        display: block;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden !important;
+    }
+    
+    .textdiv {
+        text-align: center;
+        margin-top: 5%;
+        font-size: 14px;
+    }
+    
+    .cast2div {
+        margin-top: 5%;
+    }
+    
+    .review_hr {
+        height: 2px;
+        border-width: 0;
+        color: rgba(150, 149, 149, 0.87);
+        background-color: rgba(150, 149, 149, 0.87);
+        width: 80%;
+    }
+    
+    .reviewtex {
+        display: block;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden !important;
+    }
+    
+    .footer1 {
+        position: absolute;
+        bottom: 0;
+        float: right;
+        width: 80%;
+        margin-left: 18%;
+        line-height: 3%;
+        background-color: rgb(88, 6, 6);
+        color: rgba(255, 255, 255, 0.493);
+        text-align: right;
+        font-family: 'sans-serif';
+        padding-right: 0.5%;
+        margin-top: 50%;
+    }

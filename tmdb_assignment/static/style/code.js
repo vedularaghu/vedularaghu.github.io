@@ -56,7 +56,7 @@ function setTVImage(loc) {
 
 window.onload = function get_trending() {
     document.getElementById("homepage").click();
-    fetch('https://searchmovieworld1.azurewebsites.net//gettrending')
+    fetch('https://searchmovieworld1.azurewebsites.net/gettrending')
         .then(response => response.json())
         .then(data => {
             var i = 0
@@ -113,14 +113,14 @@ function popup() {
 }
 
 function getGenre() {
-    fetch('https://searchmovieworld1.azurewebsites.net//moviegenre')
+    fetch('https://searchmovieworld1.azurewebsites.net/moviegenre')
         .then(response => response.json())
         .then(data => {
             for (const [key, value] of Object.entries(data)) {
                 movie_genre[key] = value
             }
         })
-    fetch('https://searchmovieworld1.azurewebsites.net//tvgenre')
+    fetch('https://searchmovieworld1.azurewebsites.net/tvgenre')
         .then(response => response.json())
         .then(data => {
             for (const [key, value] of Object.entries(data)) {
@@ -135,19 +135,19 @@ function getBackendData(param) {
     console.log(param, cat, id);
 
     if (cat == "movies") {
-        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//moviedetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net/moviedetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//moviecredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net/moviecredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//moviereview')
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net/moviereview')
         urlReview.searchParams.append('id', id);
 
     } else {
-        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//tvshowdetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net/tvshowdetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//tvcredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net/tvcredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//tvreview');
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net/tvreview');
         urlReview.searchParams.append('id', id);
     }
 
@@ -202,19 +202,19 @@ function showDetails(param) {
 
 
     if (cat == "movies") {
-        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//moviedetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net/moviedetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//moviecredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net/moviecredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//moviereview')
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net/moviereview')
         urlReview.searchParams.append('id', id);
 
     } else {
-        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net//tvshowdetails');
+        var urlDetails = new URL('https://searchmovieworld1.azurewebsites.net/tvshowdetails');
         urlDetails.searchParams.append('id', id);
-        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net//tvcredits');
+        var urlCredits = new URL('https://searchmovieworld1.azurewebsites.net/tvcredits');
         urlCredits.searchParams.append('id', id);
-        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net//tvreview');
+        var urlReview = new URL('https://searchmovieworld1.azurewebsites.net/tvreview');
         urlReview.searchParams.append('id', id);
     }
 
@@ -275,12 +275,18 @@ function showDetails(param) {
 
             if (data["release_date"])
                 p2.innerHTML = data["release_date"].substring(0, 4) + " | ";
+            else
+                p2.innerHTML = "N/A | ";
 
-            for (var i = 0; i < data["genres"].length; i++) {
-                if (i < data["genres"].length - 1)
-                    p2.innerHTML += data["genres"][i]["name"] + "," + "&nbsp;";
-                else
-                    p2.innerHTML += data["genres"][i]["name"];
+            if (data["genres"].length) {
+                for (var i = 0; i < data["genres"].length; i++) {
+                    if (i < data["genres"].length - 1)
+                        p2.innerHTML += data["genres"][i]["name"] + "," + "&nbsp;";
+                    else
+                        p2.innerHTML += data["genres"][i]["name"];
+                }
+            } else {
+                p2.innerHTML += "N/A"
             }
             if (data["vote_average"]) {
                 sp1.innerHTML = "★" + "&nbsp;" + "&nbsp;" + data["vote_average"] + "&nbsp;" + "&nbsp;";
@@ -324,6 +330,8 @@ function showDetails(param) {
                 var p6 = document.createElement("p")
                 var p7 = document.createElement("p")
                 var p8 = document.createElement("p")
+                p6.classList.add("ellipse1")
+                p8.classList.add("ellipse1")
                 p6.style.margin = "0"
                 p6.style.fontWeight = "bold"
                 p6.innerHTML = data[x]["name"]
@@ -364,7 +372,7 @@ function showDetails(param) {
                 p_r.classList.add("ratings")
                 var sp2 = document.createElement("span")
                 sp2.classList.add("ratingnumber")
-                b1.innerHTML = data[x]["username"]
+                b1.innerHTML = (data[x]["username"]).bold()
                     // console.log(Date(data[x]["created_at"]));
                 var txt = document.createTextNode(" on " + data[x]["created_at"].substring(5, 7) + "/" + data[x]["created_at"].substring(8, 10) + "/" + data[x]["created_at"].substring(0, 4));
                 p1.appendChild(b1)
@@ -419,13 +427,13 @@ function fetchData() {
     var query = document.getElementById("searchquery").value
     var category = document.getElementById("category").value
     if (category == "movies") {
-        var url = new URL('https://searchmovieworld1.azurewebsites.net//movie')
+        var url = new URL('https://searchmovieworld1.azurewebsites.net/movie')
         url.searchParams.append('query', query)
     } else if (category == "tvshow") {
-        var url = new URL('https://searchmovieworld1.azurewebsites.net//tvshow')
+        var url = new URL('https://searchmovieworld1.azurewebsites.net/tvshow')
         url.searchParams.append('query', query)
     } else if (category == "bothmt") {
-        var url = new URL('https://searchmovieworld1.azurewebsites.net//multisearch')
+        var url = new URL('https://searchmovieworld1.azurewebsites.net/multisearch')
         url.searchParams.append('query', query)
     }
 
@@ -479,35 +487,41 @@ function fetchData() {
 
                     var p2 = document.createElement("p")
                     p2.classList.add("contenttype")
+
                     if (value["release_date"])
                         p2.innerHTML = value["release_date"].substring(0, 4) + " | ";
+                    else
+                        p2.innerHTML = "N/A |";
 
-
-                    for (var i = 0; i < value["genre_ids"].length; i++) {
-                        if (i < value["genre_ids"].length - 1) {
-                            if (category == "movies")
-                                p2.innerHTML += movie_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                            else if (category == "tvshow")
-                                p2.innerHTML += tv_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                            else {
-                                if (value["media_type"] == "movies")
+                    if (value["genre_ids"].length) {
+                        for (var i = 0; i < value["genre_ids"].length; i++) {
+                            if (i < value["genre_ids"].length - 1) {
+                                if (category == "movies")
                                     p2.innerHTML += movie_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                                else
+                                else if (category == "tvshow")
                                     p2.innerHTML += tv_genre[value["genre_ids"][i]] + "," + "&nbsp;"
-                            }
-                        } else {
-                            if (category == "movies")
-                                p2.innerHTML += movie_genre[value["genre_ids"][i]];
-                            else if (category == "tvshow")
-                                p2.innerHTML += tv_genre[value["genre_ids"][i]];
-                            else {
-                                if (value["media_type"] == "movies")
+                                else {
+                                    if (value["media_type"] == "movies")
+                                        p2.innerHTML += movie_genre[value["genre_ids"][i]] + "," + "&nbsp;"
+                                    else
+                                        p2.innerHTML += tv_genre[value["genre_ids"][i]] + "," + "&nbsp;"
+                                }
+                            } else {
+                                if (category == "movies")
                                     p2.innerHTML += movie_genre[value["genre_ids"][i]];
-                                else
+                                else if (category == "tvshow")
                                     p2.innerHTML += tv_genre[value["genre_ids"][i]];
+                                else {
+                                    if (value["media_type"] == "movies")
+                                        p2.innerHTML += movie_genre[value["genre_ids"][i]];
+                                    else
+                                        p2.innerHTML += tv_genre[value["genre_ids"][i]];
+                                }
                             }
-                        }
 
+                        }
+                    } else {
+                        p2.innerHTML += " N/A"
                     }
 
                     var p3 = document.createElement("p")
@@ -558,12 +572,16 @@ function fetchData() {
                     disp.appendChild(head)
                 }
             }
-        }).catch(reason => {
-            console.log(reason);
         })
 }
 
 function clearprev() {
+
+    var d1 = document.getElementsByClassName("resultshead")
+    while (d1[0]) {
+        d1[0].parentNode.removeChild(d1[0])
+    }
+
     var d = document.getElementsByClassName("showcontent")
     if (d[0]) {
         p_there = true
